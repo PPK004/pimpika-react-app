@@ -1,14 +1,16 @@
 import { cards } from "./data";
+import { useState } from "react";
 
-function IsMember({ act } : {act: boolean}){
+function IsMember({ id,act } : {id : number,act: boolean}){
   if(act)
-    return <span> 🥳 Hi,Vip Member.</span>
-    else
-    return<span> 😎 Member Only!</span>
+    return <span key={id}> 🥳 Hi,Vip Member.</span>
+  else
+    return <span key={id}> 😎 Member Only!</span>
 } 
 
 function Profiles({id, nam, bio, bgp, imgu, usrn, cdat, act} : {id:number, nam:string, bio:any, bgp:string, imgu:string, usrn:string, cdat:string, act:boolean} ){
-    return(
+  console.log("ID:",id);  
+  return(
         <div className="max-w-sm w-full lg:max-w-full lg:flex">
   <div className="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style={{backgroundImage: `url(${bgp})`,color: "blue"}} title={nam}>
   </div>
@@ -16,15 +18,12 @@ function Profiles({id, nam, bio, bgp, imgu, usrn, cdat, act} : {id:number, nam:s
     <div className="mb-8">
       <p className="text-sm text-gray-600 flex items-center">
         <svg className="fill-current text-gray-500 w-3 h-3 mr-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-          <path d="M4 8V6a6 6 0 1 1 12 0v2h1a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-8c0-1.1.9-2 2-2h1zm5 6.73V17h2v-2.27a2 2 0 1 0-2 0zM7 6v2h6V6a3 3 0 0 0-6 0z" />
         </svg>
-        Members only
+        <IsMember id={id} act={act} />
       </p>
       <div className="text-gray-900 font-bold text-xl mb-2">{nam}</div>
-      <p className="text-gray-700 text-base">{bio}
-        {/* สาขาเทคโนโลยีสารสนเทศ<br/>
-        คณะบริหารธุรกิจและเทคโนโลยีสารสนเทศ<br/>
-        มหาวิทยาลัยเทคโนโลยีราชมงคลตะวันออก วิทยาเขตจักรพงษภูวนารถ */}
+      <p className="text-gray-700 text-base">
+        {bio}
       </p>
     </div>
     <div className="flex items-center">
@@ -34,21 +33,24 @@ function Profiles({id, nam, bio, bgp, imgu, usrn, cdat, act} : {id:number, nam:s
         <p className="text-gray-600">{cdat}</p>
       </div>
     </div>
-    <div className="mt-4">
-                    <IsMember act={act} />
-                </div>
-            </div>
-        </div>
+    </div>
+  </div>
     );
 }
 
-export default function MyCards(){
-    //let/var/const
+export default function MyCards(){ 
+  const [active,setActive] = useState(true);
+  //let/var/comst
     const name = "Pimpika lntutsing";
-    const note = "#Webprogramming #softwareengineering";
+    const note = "#Webprogramming";
+    const note2 = "#softwareengineering";
     const chk = true;
 
-    const cardItems = cards.map(cardItem => 
+    const items = cards.filter(cardItems => 
+      cardItems.active === active
+    );
+
+    const cardItems = items.map(cardItem => 
       <Profiles 
       id={cardItem.id}
       nam={cardItem.name}
@@ -60,20 +62,38 @@ export default function MyCards(){
       act={cardItem.active}
       />
     );
+
+   function handleClickActive(){
+    // alert("Before, handleClickActive -->"+active);
+    setActive(true);
+    // alert("After, handleClickActive -->"+active);
+   } 
+
+   function handleClickNonAct(){
+    // alert("Before, handleClickNonAct -->"+active);
+    setActive(false);
+    // alert("After, handleClickNonAct -->"+active);
+   }
     return (
-        <>
-        <h1 className="text-3xl">My Cards: Pimpika lntutsing </h1>
-        <p>{note}</p>
-        <hr/>
+      <div className="m-3 bg-red-400 p-10">
+        <h1 className="text-3xl font-bold">My Cards: Pimpika lntutsing </h1>
+        <div className="flex flex-row">
+        <div className="m-2 p-3 bg-cyan-400 rounded-3xl text-Slate-950 flex items-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" />
+</svg>{note}</div>
+        <div className="m-2 p-3 bg-cyan-300 rounded-3xl flex items-center">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M9.568 3H5.25A2.25 2.25 0 0 0 3 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 0 0 5.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 0 0 9.568 3Z" />
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6 6h.008v.008H6V6Z" />
+</svg>{note2}</div></div>
+        <hr />
         {/* <Profiles /> */}
         {cardItems}
-        </>
+        <hr />
+        <button className="h-14 w-1/2 bg-teal-400 text-slate-950 rounded-3xl" onClick={handleClickActive}>Active</button>
+        <button className="h-14 w-1/2  bg-teal-400 text-slate-950 rounded-3xl" onClick={handleClickNonAct}>Non-Active</button>
+        </div>  
     );
 
 }
-
-
-
-
-
-

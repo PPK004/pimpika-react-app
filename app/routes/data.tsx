@@ -11,21 +11,21 @@ export const cards = [
     },
     {
         id: 102,
-        name: "Pimpika lntutsing 2",
+        name: "lincoln loud",
         biog:"นักเรียน",
         bgProf: "/images/3.jpg",
         userIcon:"/images/4.jpg",
-        userName:"Pimpika",
+        userName:"loud",
         createdAt: "July 10,2024",
         active: false
     },
     {
         id: 103,
-        name: "Pimpika lntutsing 3",
+        name: "lori loud",
         biog:"นักเรียน",
         bgProf: "/images/2.jpg",
         userIcon:"/images/3.jpg",
-        userName:"Pimpika",
+        userName:"loud",
         createdAt: "July 10,2024",
         active: true
     },
