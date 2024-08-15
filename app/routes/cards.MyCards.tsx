@@ -33,7 +33,10 @@ function Profiles({id, nam, bio, bgp, imgu, usrn, cdat, act} : {id:number, nam:s
         <p className="text-gray-600">{cdat}</p>
       </div>
     </div>
+    <div className="mt-4">
+    <a href={`/viewcards/${id}`} className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"> View</a>
     </div>
+  </div>
   </div>
     );
 }
